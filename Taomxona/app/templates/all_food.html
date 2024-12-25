@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Barcha Taomlar</h1>
+    <div class="row">
+        {% for food in foods %}
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ food.image.url }}" class="card-img-top" alt="{{ food.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ food.name }}</h5>
+                        <p class="card-text">{{ food.description }}</p>
+                        <p class="card-text">{{ food.price }} $</p>
+
+                        {% if user.is_superuser %}
+                            <a href="{% url 'edit_food' food.id %}" class="btn btn-primary">Edit</a> <!-- Edit tugmasi for superusers -->
+                        {% else %}
+                            <a href="{% url 'food_detail' food.id %}" class="btn btn-secondary">Batafsil</a> <!-- Batafsil tugmasi for normal users -->
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
